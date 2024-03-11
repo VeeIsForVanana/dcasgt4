@@ -1,10 +1,11 @@
 import { jsonToUser } from "$lib/data"
+import { error } from '@sveltejs/kit'
 
 export async function load() {
     return fetch(`https://api.github.com/users`).then(
         response => {
             if (!response.ok) {
-                throw new Error (`Network errored with status code: ${response.status} ${response.statusText}`)
+                throw error (response.status, `${response.statusText} while looking for users`)
             }
             return response.json()
         }
