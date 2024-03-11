@@ -1,14 +1,56 @@
-import { json } from "@sveltejs/kit";
+class User { 
+    private _username: string;
+    private _description: string;
+    private _userURL: string;
+    private _avatarURL: string;
 
-type User = { 
-    username: string,
-    description: string,
-    userURL: string,
-    avatarURL: string,
+    constructor(
+        username: string,
+        description: string,
+        userURL: string,
+        avatarURL: string,
+    ) {
+        this._username = username;
+        this._description = description;
+        this._userURL = userURL;
+        this._avatarURL = avatarURL;
+    }
+
+    get username(): string {
+        return this._username;
+    }
+
+    set username(value: string) {
+        this._username = value;
+    }
+
+    get description(): string {
+        return this._description;
+    }
+
+    set description(value: string) {
+        this._description = value;
+    }
+
+    get userURL(): string {
+        return this._userURL;
+    }
+
+    set userURL(value: string) {
+        this._userURL = value;
+    }
+
+    get avatarURL(): string {
+        return this._avatarURL;
+    }
+
+    set avatarURL(value: string) {
+        this._avatarURL = value;
+    }
 }
 
 export async function getUsers(): Promise<User[]> {
-    
+
 }
 
 export async function getUser(username: string): Promise<User> {
@@ -32,8 +74,4 @@ export async function getUser(username: string): Promise<User> {
             }
         }
     )
-}
-
-export function addNewPost(name: string, content: string): void {
-    POSTS.push({ name: name, content: content })
 }
