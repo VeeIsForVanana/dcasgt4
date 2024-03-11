@@ -66,12 +66,12 @@ export async function getUser(username: string): Promise<User> {
         }
     ).then(
         json => {
-            return {
-                username: json["login"],
-                description: json["bio"],
-                userURL: json["user_url"],
-                avatarURL: json["avatar_url"],
-            }
+            return new User(
+                json["login"],
+                json["bio"],
+                json["user_url"],
+                json["avatar_url"],
+            )
         }
     )
 }
