@@ -1,3 +1,5 @@
+import type { json } from "@sveltejs/kit";
+
 class User { 
     private _username: string;
     private _description: string;
@@ -50,7 +52,20 @@ class User {
 }
 
 export async function getUsers(): Promise<User[]> {
-
+    return fetch(`https://api.github.com/users`).then(
+        response => {
+            if (!response.ok) {
+                throw new Error (`Network errored with status code: ${response.status} ${response.statusText}`)
+            }
+            return response.json()
+        }
+    ).then(
+        json => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const userArray: any[] = json
+            return userArray.map((val) => new User(val["login"], val["bio"], val["user_url"], val["avatar_url"]))
+        }
+    )
 }
 
 export async function getUser(username: string): Promise<User> {
