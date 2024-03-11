@@ -1,9 +1,9 @@
 <script lang="ts">
-    export let data: { posts: any };
+    export let data;
 </script>
 
-<h1>Welcome to ThatCrab's Blog!</h1>
+<h1>GitHub Users</h1>
 
-{#each data.posts as {name, description}}
-    <a href="/{name}">{name}</a>
+{#each data.users as {username, description, userURL, avatarURL}}
+    <a href="/{username}">{username} - {description}</a><br>
 {/each}
