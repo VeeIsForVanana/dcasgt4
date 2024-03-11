@@ -60,9 +60,6 @@ export async function getUser(username: string): Promise<User> {
                 throw new Error (`Network errored with status code: ${response.status} ${response.statusText}`)
             }
             return response.json()
-        },
-        error => {
-            console.error(`Error occurred while fetching user ${username}, ${error}`)
         }
     ).then(
         json => {
