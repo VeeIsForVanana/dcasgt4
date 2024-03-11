@@ -1,5 +1,3 @@
-import type { json } from "@sveltejs/kit";
-
 class User { 
     private _username: string;
     private _description: string;
