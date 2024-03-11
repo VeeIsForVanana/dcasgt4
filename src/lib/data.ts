@@ -1,87 +1,11 @@
-class User { 
-    private _username: string;
-    private _description: string;
-    private _userURL: string;
-    private _avatarURL: string;
+type User = { username: string, description: string, userURL: string, avatarURL: string }
 
-    constructor(
-        username: string,
-        description: string,
-        userURL: string,
-        avatarURL: string,
-    ) {
-        this._username = username;
-        this._description = description;
-        this._userURL = userURL;
-        this._avatarURL = avatarURL;
+// helper function to convert an arbitrary json object (expected to be from a response from GitHub REST API)
+export function jsonToUser(json: { [x: string]: string }): User {
+    return {
+        username: json["login"],
+        description: json["bio"],
+        userURL: json["user_url"],
+        avatarURL: json["avatar_url"],
     }
-
-    get username(): string {
-        return this._username;
-    }
-
-    set username(value: string) {
-        this._username = value;
-    }
-
-    get description(): string {
-        return this._description;
-    }
-
-    set description(value: string) {
-        this._description = value;
-    }
-
-    get userURL(): string {
-        return this._userURL;
-    }
-
-    set userURL(value: string) {
-        this._userURL = value;
-    }
-
-    get avatarURL(): string {
-        return this._avatarURL;
-    }
-
-    set avatarURL(value: string) {
-        this._avatarURL = value;
-    }
-}
-
-export async function getUsers(): Promise<User[]> {
-    return fetch(`https://api.github.com/users`).then(
-        response => {
-            if (!response.ok) {
-                throw new Error (`Network errored with status code: ${response.status} ${response.statusText}`)
-            }
-            return response.json()
-        }
-    ).then(
-        json => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const userArray: any[] = json
-            return userArray.map((val) => new User(val["login"], val["bio"], val["user_url"], val["avatar_url"]))
-        }
-    )
-}
-
-export async function getUser(username: string): Promise<User> {
-    return fetch(`https://api.github.com/users/${username}`).then(
-        response => {
-            if (!response.ok) {
-                throw new Error (`Network errored with status code: ${response.status} ${response.statusText}`)
-            }
-            return response.json()
-        }
-    ).then(
-        json => {
-            return new User(
-                json["login"],
-                json["bio"],
-                json["user_url"],
-                json["avatar_url"],
-            )
-        }
-    )
 }

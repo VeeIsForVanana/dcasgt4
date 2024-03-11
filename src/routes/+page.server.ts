@@ -1,3 +1,5 @@
+import { jsonToUser } from "$lib/data"
+
 export async function load() {
     return fetch(`https://api.github.com/users`).then(
         response => {
@@ -10,14 +12,9 @@ export async function load() {
         json => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const usersArray: Array<any> = json
-            return {users: usersArray.map(
-                (val) => ({
-                    username: val["login"],
-                    description: val["bio"],
-                    userURL: val["user_url"],
-                    avatarURL: val["avatar_url"],
-                })
-            )}
+            return { 
+                users: usersArray.map(jsonToUser) 
+            }
         }
     )
 }
