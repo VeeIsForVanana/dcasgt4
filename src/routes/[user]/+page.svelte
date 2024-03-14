@@ -9,5 +9,5 @@
 <img alt={`${data.username}'s avatar'`} src={data.avatarURL}/>
 
 <p>
-    {data.description}
+    {data.id}
 </p>
