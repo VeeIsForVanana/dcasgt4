@@ -8,7 +8,6 @@ export async function load() {
     const per_hour = response.headers.get("x-ratelimit-limit")
     const remaining = response.headers.get("x-ratelimit-remaining")
     const reset_time = response.headers.get("x-ratelimit-reset")
-    console.log(reset_time)
     if(per_hour && remaining && reset_time) {
         rateLimits.per_hour = Number(per_hour)
         rateLimits.remaining = Number(remaining)
