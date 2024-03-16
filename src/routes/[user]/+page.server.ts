@@ -13,3 +13,10 @@ export async function load({ fetch, params: { user }, cookies }) {
     const json = await response.json();
     return { user: jsonToUser(json), history: stored };
 }
+
+export const actions = {
+    default: ({ cookies }) => {
+        console.log("Clearing history")
+        cookies.delete('last_visited', { path: '/' })
+    }
+}
