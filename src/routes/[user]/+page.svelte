@@ -1,7 +1,7 @@
 <script lang="ts">
     export let data;
 
-    const history = data.history?.split(',')
+    const history: Array<string> = data.history?.split(',')
 </script>
 
 <h3>
@@ -9,9 +9,11 @@
 </h3>
 
 {#if history != null}
-    {#each history as visited}
-        <h6>{visited} >> </h6>
-    {/each}
+    <h4>
+        {#each history as user}
+            <a href='/{user}'>{user}</a>{history.findIndex((elem) => elem == user) == history.length - 1 ? '' : ' >> '}
+        {/each}
+    </h4>
 {/if}
 
 <img alt={`${data.user.username}'s avatar'`} src={data.user.avatarURL}/>
