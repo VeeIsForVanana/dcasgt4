@@ -17,7 +17,7 @@
         </h4>
     {/if}
     <form method="POST">
-        <button>
+        <button name="clearHistory">
             Clear history
         </button>
     </form>

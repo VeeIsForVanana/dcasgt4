@@ -155,4 +155,17 @@ test.describe('cookie history tests', () => {
 		await expect(page.getByText(usernames, { exact: true })).toBeVisible()
 	})
 
+	test('clicking on remove history button clears history', async ({ context, page }) => {
+		await context.clearCookies()
+		await page.goto(`/${usersToVisit[0]}`)
+
+		const button = await page.getByRole('button', { name: 'clearHistory' })
+		await button.click()
+
+		const cookies = await context.cookies()
+		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
+
+		await expect(historyCookie?.value).toBeNull()
+	})
+
 })
