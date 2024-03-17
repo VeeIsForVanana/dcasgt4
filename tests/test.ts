@@ -122,12 +122,15 @@ test.describe('cookie history tests', () => {
 		await firstLink.click()
 		await page.waitForURL(firstHREF)
 
+		for(const user of usersToVisit) await page.goto(`/${user}`)
+
 		const cookies = await context.cookies()
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
 		console.log(cookies)
 		console.log(usernames)
+		const visited = historyCookie?.value.replace('%2C', ',')
 
-		expect(historyCookie?.value).toBe(usernames)
+		expect(visited).toBe(usernames)
 	})
 
 })

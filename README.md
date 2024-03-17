@@ -73,3 +73,25 @@ Your assignment, if you choose to accept it, is to complete this simple website 
 The finished project should look like the GIF demonstration below.
 
 ![GIF demonstrating the functionality of the completed assignment](https://github.com/VeeIsForVanana/dcasgt4/assets/95967340/a3c636eb-130c-4c45-955e-336312deb382)
+
+## Specifications
+
+Formally, your finished assignment should accomplish the following:
+
+1. Load and link to **at least 10 GitHub users** on the homepage
+2. Be capable of generating **a page for *any* publicly visible GitHub user** consisting of their *username* (as a header) and their *avatar* (as an image) 
+3. Keep track of all previously visited users (a *history*, if you will), storing this information as **a comma-delimited string** in a *cookie* (note that repeat visits are repeated in history)
+4. Display the history on every user page as a ' >> ' delimited *paragraph*, where every username in the history is a link to the corresponding user page
+5. Provide a **button** to clear this history, displayed on all user pages
+
+> [!CAUTION] Note that the requirements stated or demonstrated in this README may be incomplete or ambiguous. The tests, as implemented in `tests/test.ts` of this repository will be the final reference for correctness.
+
+You may implement additional features, as long as they do not conflict with the test cases. For reasons detailed below, it is recommended to somehow keep track of your current **Rate Limit**.
+
+## The Rate Limit
+
+It should be noted that the GitHub Public API, like most APIs, is not solely for our consumption. Much less so for unauthenticated users. Thus, there is a [limit to the number of API calls we can perform in a given period of time](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28). 
+
+All API calls such as those we will be using for this assignment, **including the calls that the tests themselves make (~20 per full test run)** are included in this limit. Please budget your calls wisely.
+
+Furthermore, while it is not prohibited to use authentication tokens to take advantage of a higher rate limit (though it should be noted this assignment was made without taking advantage of this), [please be careful with your sensitive data](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository), *especially when pushing to GitHub*.
