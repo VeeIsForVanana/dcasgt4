@@ -38,10 +38,10 @@ It is also advised that, in addition to these topics, you familiarize yourself w
 - [The Javascript `fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 - [`async` functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 - [The GitHub REST API](https://docs.github.com/en/rest?apiVersion=2022-11-28) (Note that we will be using the public API without authentication)
+	- Specifically of interest to us for this assignment are the [List Users](https://docs.github.com/en/rest?apiVersion=2022-11-28) and [Get a User](https://docs.github.com/en/rest?apiVersion=2022-11-28) endpoints.
 
-    > [!NOTE] In case REST APIs are new to you, it might also be useful to read up on those too. We will only be making use of GET request endpoints in this assignment; however.
-    
-    - Specifically of interest to us for this assignment are the [List Users](https://docs.github.com/en/rest?apiVersion=2022-11-28) and [Get a User](https://docs.github.com/en/rest?apiVersion=2022-11-28) endpoints.
+> [!TIP]
+> In case REST APIs are new to you, it might also be useful to read up on those too. We will only be making use of GET request endpoints in this assignment; however.
 
 ## Preliminaries
 
@@ -84,7 +84,8 @@ Formally, your finished assignment should accomplish the following:
 4. Display the history on every user page as a ' >> ' delimited *paragraph*, where every username in the history is a link to the corresponding user page
 5. Provide a **button** to clear this history, displayed on all user pages
 
-> [!CAUTION] Note that the requirements stated or demonstrated in this README may be incomplete or ambiguous. The tests, as implemented in `tests/test.ts` of this repository will be the final reference for correctness.
+> [!CAUTION]
+> Note that the requirements stated or demonstrated in this README may be incomplete or ambiguous. The tests, as implemented in `tests/test.ts` of this repository will be the final reference for correctness.
 
 You may implement additional features, as long as they do not conflict with the test cases. For reasons detailed below, it is recommended to somehow keep track of your current **Rate Limit**.
 
