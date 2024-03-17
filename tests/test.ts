@@ -1,5 +1,9 @@
 import { expect, test, type Cookie } from '@playwright/test';
 
+function errorWhen403(response: Response): void | never {
+	if (response.status == 403) throw Error("You've probably exceeded the ratelimit, try again later")
+}
+
 test.describe('homepage tests', async () => {
 	test('index page has expected h1', async ({ page }) => {
 		await page.goto('/');
@@ -12,13 +16,14 @@ test.describe('homepage tests', async () => {
 		const linkText = await page.getByRole('link').first().textContent()
 		const username = linkText?.split(' - ')[1]
 		const response = await fetch(`https://api.github.com/users/${username}`)
-		expect(response.ok)
+		errorWhen403(response)
+		expect(response.ok).toBeTruthy
 	});
 
 	// can't test all links otherwise we will hit the rate limit too quickly
 	test('index page has at least 10 links', async ({ page }) => {
 		await page.goto('/');
-		expect((await page.getByRole('link').all()).length >= 10)
+		expect((await page.getByRole('link').all()).length).toBeGreaterThanOrEqual(10)
 	});
 
 	test('index page has last link that corresponds to a github user', async ({ page }) => {
@@ -26,7 +31,8 @@ test.describe('homepage tests', async () => {
 		const linkText = await page.getByRole('link').last().textContent()
 		const username = linkText?.split(' - ')[1]
 		const response = await fetch(`https://api.github.com/users/${username}`)
-		expect(response.ok)
+		errorWhen403(response)
+		expect(response.ok).toBeTruthy
 	});
 })
 
@@ -38,7 +44,7 @@ test.describe('first user page content tests', () => {
 		const username = (await firstLink.textContent())?.split(' - ')[1]
 		await firstLink.click()
 		const firstHeader = await page.getByRole('heading').first()
-		expect(await firstHeader.textContent() == username)
+		expect(await firstHeader.textContent()).toBe(username)
 	})
 
 	test('first user page avatar matches actual avatar', async ({ page }) => {
@@ -47,9 +53,10 @@ test.describe('first user page content tests', () => {
 		const username = (await firstLink.textContent())?.split(' - ')[1]
 		await firstLink.click()
 		const response = await fetch(`https://api.github.com/users/${username}`)
+		errorWhen403(response)
 		const json = await response.json()
 		const imageSRC = await page.getByRole('img').getAttribute('src')
-		expect(imageSRC == json['avatar_url'])
+		expect(imageSRC).toBe(json['avatar_url'])
 	})
 })
 
@@ -59,15 +66,16 @@ test.describe('arbitrary user page content tests', () => {
 
 	test(`${username}'s page has first header matching username`, async ({ page }) => {
 		await page.goto(`/${username}`)
-		expect(await page.getByRole('heading').first().textContent() == username)
+		expect(await page.getByRole('heading').first().textContent()).toBe(username)
 	})
 
 	test(`${username}'s page has an image matching their avatar`, async ({ page }) => {
 		await page.goto(`/${username}`)
 		const response = await fetch(`https://api.github.com/users/${username}`)
+		errorWhen403(response)
 		const json = await response.json()
 		const imageSRC = await page.getByRole('img').getAttribute('src')
-		expect(imageSRC == json['avatar_url'])
+		expect(imageSRC).toBe(json['avatar_url'])
 	})
 
 })
@@ -87,8 +95,9 @@ test.describe('cookie history tests', () => {
 
 		const cookies = await context.cookies()
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
+		console.log(historyCookie)
 		
-		expect(historyCookie?.value == username)
+		expect(historyCookie?.value).toBe(username)
 	})
 
 	test(`visiting first user page followed by ${usersToVisit} creates correct history in cookies`, async ({ context, page }) => {
@@ -103,8 +112,10 @@ test.describe('cookie history tests', () => {
 
 		const cookies = await context.cookies()
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
+		console.log(historyCookie)
+		console.log(usernames)
 
-		expect(historyCookie?.value == usernames)
+		expect(historyCookie?.value).toBe(usernames)
 	})
 
 })
