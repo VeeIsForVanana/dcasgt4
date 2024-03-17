@@ -128,9 +128,31 @@ test.describe('cookie history tests', () => {
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
 		console.log(cookies)
 		console.log(usernames)
-		const visited = historyCookie?.value.replace('%2C', ',')
+		const visited = historyCookie?.value.replace(/%2C/g, ',')
 
-		expect(visited).toBe(usernames)
+		await expect(visited).toBe(usernames)
+	})
+
+	test(`visiting first user page followed by ${usersToVisit} creates correct history on pages`, async ({ context, page }) => {
+		await context.clearCookies()
+		await page.goto('/')
+
+		const firstLink = await page.getByRole('link').first()
+		const username = (await firstLink.textContent())?.split(' - ')[1]
+		const usernames = [username].concat(usersToVisit).toString().replace(/,/g, ' >> ')
+
+		const firstHREF = await firstLink.getAttribute('href')
+		if (firstHREF == undefined) throw Error
+		await firstLink.click()
+		await page.waitForURL(firstHREF)
+
+		usernames.split
+
+		for(const user of usersToVisit) await page.goto(`/${user}`)
+
+		await page.waitForURL(`/${usersToVisit.findLast( () => true )}`)
+
+		await expect(page.getByText(usernames, { exact: true })).toBeVisible()
 	})
 
 })
