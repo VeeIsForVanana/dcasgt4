@@ -104,7 +104,7 @@ test.describe('cookie history tests', () => {
 
 		const cookies = await context.cookies()
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
-		console.log(historyCookie)
+		console.log(cookies)
 		
 		expect(historyCookie?.value).toBe(username)
 	})
@@ -124,7 +124,7 @@ test.describe('cookie history tests', () => {
 
 		const cookies = await context.cookies()
 		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
-		console.log(historyCookie)
+		console.log(cookies)
 		console.log(usernames)
 
 		expect(historyCookie?.value).toBe(usernames)
