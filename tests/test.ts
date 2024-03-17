@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Cookie } from '@playwright/test';
 
 test.describe('homepage tests', async () => {
 	test('index page has expected h1', async ({ page }) => {
@@ -68,6 +68,43 @@ test.describe('arbitrary user page content tests', () => {
 		const json = await response.json()
 		const imageSRC = await page.getByRole('img').getAttribute('src')
 		expect(imageSRC == json['avatar_url'])
+	})
+
+})
+
+test.describe('cookie history tests', () => {
+
+	const usersToVisit = ['VeeIsForVanana', 'BastiDood']
+
+	test('visiting first user page creates correct history in cookies', async ({ context, page }) => {
+		await context.clearCookies()
+		await page.goto('/')
+
+		const firstLink = await page.getByRole('link').first()
+		const username = (await firstLink.textContent())?.split(' - ')[1]
+
+		await firstLink.click()
+
+		const cookies = await context.cookies()
+		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
+		
+		expect(historyCookie?.value == username)
+	})
+
+	test(`visiting first user page followed by ${usersToVisit} creates correct history in cookies`, async ({ context, page }) => {
+		await context.clearCookies()
+		await page.goto('/')
+
+		const firstLink = await page.getByRole('link').first()
+		const username = (await firstLink.textContent())?.split(' - ')[1]
+		const usernames = [username].concat(usersToVisit).toString()
+
+		await firstLink.click()
+
+		const cookies = await context.cookies()
+		const historyCookie = cookies.find( (elem: Cookie) => elem.name == 'last_visited' )
+
+		expect(historyCookie?.value == usernames)
 	})
 
 })
