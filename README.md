@@ -72,4 +72,4 @@ Your assignment, if you choose to accept it, is to complete this simple website 
 
 The finished project should look like the GIF demonstration below.
 
-![GIF demonstrating the functionality of the completed assignment](dcasgt4demo.gif)
+![GIF demonstrating the functionality of the completed assignment](https://github.com/VeeIsForVanana/dcasgt4/assets/95967340/a3c636eb-130c-4c45-955e-336312deb382)
