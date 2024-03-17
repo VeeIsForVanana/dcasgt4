@@ -1,20 +1,13 @@
-import { jsonToUser, type RateLimit } from "$lib/data"
-import { error } from '@sveltejs/kit'
+// import { jsonToUser, type RateLimit } ???
+// TODO: fix import
 
 export async function load() {
-    const rateLimits: RateLimit = { per_hour: 0, remaining: 0, reset_time: new Date() }
-    const response = await fetch(`https://api.github.com/users`)
-    if (!response.ok) error (response.status, `${response.statusText} while looking for users`);
-    const per_hour = response.headers.get("x-ratelimit-limit")
-    const remaining = response.headers.get("x-ratelimit-remaining")
-    const reset_time = response.headers.get("x-ratelimit-reset")
-    if(per_hour && remaining && reset_time) {
-        rateLimits.per_hour = Number(per_hour)
-        rateLimits.remaining = Number(remaining)
-        rateLimits.reset_time = new Date()
-        rateLimits.reset_time.setTime(Number(reset_time) * 1000)
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const json : Array<any> = await response.json()
-    return { users: json.map(jsonToUser), rateLimits: rateLimits }
+    
+    // TODO: retrieve a list of users from the appropriate GitHub API endpoint
+
+    // const json : Array<any> = ???
+    // return { users: json.map(jsonToUser) }
+    // TODO: there is a helper function in src/lib/data.ts that processes the JSON received as a response from the GitHub API into a more concise format, 
+    //       but how do we get the response in the first place, how do we import that helper, and more importantly, how do we pass it to the page itself
+
 }
