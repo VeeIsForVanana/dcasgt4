@@ -21,7 +21,7 @@ test.describe('homepage tests', async () => {
 		expect((await page.getByRole('link').all()).length >= 10)
 	});
 
-	test('index page has last link that corresponds to a github user', async({ page }) => {
+	test('index page has last link that corresponds to a github user', async ({ page }) => {
 		await page.goto('/');
 		const linkText = await page.getByRole('link').last().textContent()
 		const username = linkText?.split(' - ')[1]
@@ -32,7 +32,7 @@ test.describe('homepage tests', async () => {
 
 test.describe('first user page content tests', () => {
 
-	test('first user page username matches link username', async({ page }) => {
+	test('first user page username matches link username', async ({ page }) => {
 		await page.goto('/');
 		const firstLink = await page.getByRole('link').first()
 		const username = (await firstLink.textContent())?.split(' - ')[1]
@@ -41,8 +41,8 @@ test.describe('first user page content tests', () => {
 		expect(await firstHeader.textContent() == username)
 	})
 
-	test('first user page avatar matches actual avatar', async({ page }) => {
-		await page.goto('/');
+	test('first user page avatar matches actual avatar', async ({ page }) => {
+		await page.goto('/')
 		const firstLink = await page.getByRole('link').first()
 		const username = (await firstLink.textContent())?.split(' - ')[1]
 		await firstLink.click()
@@ -51,4 +51,23 @@ test.describe('first user page content tests', () => {
 		const imageSRC = await page.getByRole('img').getAttribute('src')
 		expect(imageSRC == json['avatar_url'])
 	})
+})
+
+test.describe('arbitrary user page content tests', () => {
+
+	const username = 'VeeIsForVanana'
+
+	test(`${username}'s page has first header matching username`, async ({ page }) => {
+		await page.goto(`/${username}`)
+		expect(await page.getByRole('heading').first().textContent() == username)
+	})
+
+	test(`${username}'s page has an image matching their avatar`, async ({ page }) => {
+		await page.goto(`/${username}`)
+		const response = await fetch(`https://api.github.com/users/${username}`)
+		const json = await response.json()
+		const imageSRC = await page.getByRole('img').getAttribute('src')
+		expect(imageSRC == json['avatar_url'])
+	})
+
 })
