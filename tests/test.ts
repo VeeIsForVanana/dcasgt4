@@ -30,6 +30,25 @@ test.describe('homepage tests', async () => {
 	});
 })
 
-test.describe('userpage content tests', async () => {
-	
+test.describe('first user page content tests', () => {
+
+	test('first user page username matches link username', async({ page }) => {
+		await page.goto('/');
+		const firstLink = await page.getByRole('link').first()
+		const username = (await firstLink.textContent())?.split(' - ')[1]
+		await firstLink.click()
+		const firstHeader = await page.getByRole('heading').first()
+		expect(await firstHeader.textContent() == username)
+	})
+
+	test('first user page avatar matches actual avatar', async({ page }) => {
+		await page.goto('/');
+		const firstLink = await page.getByRole('link').first()
+		const username = (await firstLink.textContent())?.split(' - ')[1]
+		await firstLink.click()
+		const response = await fetch(`https://api.github.com/users/${username}`)
+		const json = await response.json()
+		const imageSRC = await page.getByRole('img').getAttribute('src')
+		expect(imageSRC == json['avatar_url'])
+	})
 })
