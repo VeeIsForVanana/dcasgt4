@@ -54,6 +54,12 @@ npm install
 ```
 Inside the repository's directory in order to install the SvelteKit framework.
 
+Then, you'll need to install [Playwright](https://playwright.dev/) using 
+
+```
+npx playwright install
+```
+
 In order to run your project locally (with your system running as a server and allowing you to access it via browser through a localhost port), run the following command:
 
 ```
