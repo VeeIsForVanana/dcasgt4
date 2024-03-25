@@ -1,4 +1,4 @@
-// This part is worth 15 points
+// This part is worth 10 points
 
 import { expect, test } from '@playwright/test';
 import { errorWhen403 } from './test0';

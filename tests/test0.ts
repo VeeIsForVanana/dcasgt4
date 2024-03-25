@@ -1,4 +1,4 @@
-// This item is worth 15 points
+// This item is worth 10 points
 
 import { expect, test } from '@playwright/test';
 
