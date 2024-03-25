@@ -1,3 +1,5 @@
+// This item is worth 45 points
+
 import { expect, test, type Cookie } from '@playwright/test';
 
 test.describe('cookie history tests', () => {

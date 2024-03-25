@@ -1,3 +1,5 @@
+// This item is worth 15 points
+
 import { expect, test } from '@playwright/test';
 
 export function errorWhen403(response: Response): void | never {
