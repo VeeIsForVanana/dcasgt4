@@ -39,6 +39,8 @@ It is also advised that, in addition to these topics, you familiarize yourself w
 - [`async` functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 - [The GitHub REST API](https://docs.github.com/en/rest?apiVersion=2022-11-28) (Note that we will be using the public API without authentication)
 	- Specifically of interest to us for this assignment are the [List Users](https://docs.github.com/en/rest?apiVersion=2022-11-28) and [Get a User](https://docs.github.com/en/rest?apiVersion=2022-11-28) endpoints.
+- TypeScript (a variant of JavaScript that introduces the notion of types), specifially the [type aliases](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) feature
+	- It should be noted for those unfamiliar with TypeScript, that it is practically like programming with JavaScript. Type aliases (as in declarations with the keyword `type`) were mainly used to solidly define certain types of objects during the development of this project.
 
 > [!TIP]
 > In case REST APIs are new to you, it might also be useful to read up on those too. We will only be making use of GET request endpoints in this assignment; however.
@@ -53,6 +55,12 @@ Upon locally cloning this repository, please execute
 npm install
 ```
 Inside the repository's directory in order to install the SvelteKit framework.
+
+Then, you'll need to install [Playwright](https://playwright.dev/) using 
+
+```
+npx playwright install
+```
 
 In order to run your project locally (with your system running as a server and allowing you to access it via browser through a localhost port), run the following command:
 
